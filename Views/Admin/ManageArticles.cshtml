@@ -1,0 +1,79 @@
+﻿@model IEnumerable<MeBeCare.Models.Article>
+
+@{
+    ViewData["Title"] = "📝 Quản lý Bài viết Chuyên gia";
+}
+
+<style>
+    .page-title {
+        color: #d63384;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .table thead th {
+        background-color: #ffe6f0;
+        color: #d63384;
+    }
+
+    .btn-delete {
+        background-color: #ff6b6b;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+
+    .btn-delete:hover {
+        background-color: #e63946;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="page-title">📋 Danh sách Bài viết Chuyên gia</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mb-3">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>📌 Tiêu đề</th>
+                    <th>👤 Tác giả</th>
+                    <th>📅 Ngày tạo</th>
+                    <th class="text-center">⚙️ Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Author?.FirstName @item.Author?.LastName</td>
+                        <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">
+                            <form asp-action="DeleteArticle" asp-route-id="@item.ArticleID" method="post"
+                                  onsubmit="return confirm('Bạn có chắc muốn xoá bài viết này?');" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-delete btn-sm">🗑️ Xoá</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<a asp-action="Index" class="btn btn-outline-secondary">
+    ⬅️ Quay về Quản lý Người dùng
+</a>

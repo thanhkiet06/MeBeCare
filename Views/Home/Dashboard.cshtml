@@ -1,0 +1,31 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Bảng điều khiển";
+}
+<head>
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <script src="~/js/dashboard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng điều khiển - Mẹ và Bé</title>
+</head>
+
+<div class="dashboard-header">
+    <div class="container header-container">
+        <h1>Xin chào, mẹ/bố yêu thương 👩‍👧</h1>
+        <nav class="navbar-mom-baby">
+            <ul class="navbar-list">
+                <li><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li><a asp-controller="Home" asp-action="HuongDan">Hướng dẫn</a></li>
+                <li><a asp-controller="Home" asp-action="ChuyenGia">Chuyên gia</a></li>
+                <li><a asp-controller="Home" asp-action="LienHe">Liên hệ</a></li>
+                <li><a asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<main class="container dashboard-main">
+    <h2>Chào mừng bạn đến với hệ thống chăm sóc sức khỏe <span>Mẹ & Bé</span>!</h2>
+    <p>Bạn có thể theo dõi sức khỏe, nhận tư vấn từ chuyên gia và nhiều tính năng hữu ích khác.</p>
+</main>

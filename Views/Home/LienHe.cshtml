@@ -1,0 +1,228 @@
+﻿@model MeBeCare.Models.ContactMessage
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="~/css/lienhe.css">
+    <link rel="stylesheet" href="~/js/lienhe.js">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ - Mẹ và Bé</title>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://insacmau.com/wp-content/uploads/2024/12/logo-me-be-8.jpg" alt="Mẹ và Bé Logo">
+            <h1>Liên Hệ Với Chúng Tôi</h1>
+            <p class="subtitle">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn mọi lúc mọi nơi</p>
+        </div>
+        
+        <div class="contact-info">
+            <div class="info-item">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </div>
+                <div class="info-text">
+                    <h4>Địa chỉ</h4>
+                    <p>Số 12 đường Cây Keo, Tam Phú, TP.Thủ Đức, TPHCM</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </div>
+                <div class="info-text">
+                    <h4>Email</h4>
+                    <a href="mailto:nguyen2662004@gmail.com">nguyen2662004@gmail.com</a>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                </div>
+                <div class="info-text">
+                    <h4>Đường dây nóng</h4>
+                    <a href="tel:1800123456">0909965841</a>
+                </div>
+            </div>
+        </div>
+        
+        <form action="php/contact.php" method="POST"></form>
+        <form id="contactForm" asp-action="SubmitContact" asp-controller="Contact" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col form-group">
+                    <label asp-for="FullName"></label>
+                    <input asp-for="FullName" class="form-control" placeholder="Nhập họ và tên của bạn" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="col form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Nhập địa chỉ email của bạn" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="Nhập số điện thoại của bạn" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="col form-group">
+                    <label asp-for="Subject"></label>
+                    <select asp-for="Subject" class="form-control">
+                        <option value="">Chọn chủ đề liên hệ</option>
+                        <option value="question">Câu hỏi về sản phẩm</option>
+                        <option value="service">Dịch vụ chăm sóc</option>
+                        <option value="complaint">Khiếu nại</option>
+                        <option value="wholesale">Đại lý/Bán buôn</option>
+                        <option value="advice">Tư vấn dinh dưỡng & sức khỏe</option>
+                        <option value="other">Vấn đề khác</option>
+                    </select>
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ChildAge"></label>
+                <select asp-for="ChildAge" class="form-control">
+                    <option value="">Chọn độ tuổi</option>
+                    <option value="expecting">Đang mang thai</option>
+                    <option value="newborn">Sơ sinh (0-3 tháng)</option>
+                    <option value="infant">Trẻ nhỏ (4-12 tháng)</option>
+                    <option value="toddler">Trẻ tập đi (1-3 tuổi)</option>
+                    <option value="preschool">Mẫu giáo (3-5 tuổi)</option>
+                    <option value="school">Trẻ đến trường (6+ tuổi)</option>
+                    <option value="multiple">Nhiều con ở các độ tuổi khác nhau</option>
+                </select>
+                <span asp-validation-for="ChildAge" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Message"></label>
+                <textarea asp-for="Message" class="form-control" rows="5" placeholder="Nhập nội dung bạn muốn gửi đến chúng tôi..."></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi tin nhắn</button>
+
+            <p class="note text-muted mt-2">Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc. Cảm ơn bạn đã liên hệ!</p>
+        </form>
+
+        <div class="success-message" id="success-message">
+            <h3>Cảm ơn bạn đã liên hệ!</h3>
+            <p>Tin nhắn của bạn đã được gửi thành công. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+        </div>
+        
+        <a asp-controller="Home" asp-action="Index" class="back-to-home">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            Quay lại trang chủ
+        </a>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('success-message');
+
+                    contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (!validateForm()) return;
+
+            const formData = new FormData(contactForm);
+
+            fetch('/Contact/SubmitContact', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    contactForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        contactForm.reset();
+                        contactForm.style.display = 'block';
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    alert('❌ Gửi thất bại. Vui lòng thử lại.');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('❌ Có lỗi xảy ra khi gửi.');
+            });
+        });
+
+            
+            function validateForm() {
+                let isValid = true;
+                
+                // Validate Full Name
+                const fullName = document.getElementById('FullName');
+                const fullNameError = document.getElementById('fullName-error');
+                if (fullName.value.trim() === '') {
+                    fullNameError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    fullNameError.style.display = 'none';
+                }
+
+                // Validate Phone (optional but must be valid if provided)
+                const phone = document.getElementById('Phone');
+                const phoneError = document.getElementById('phone-error');
+                if (phone.value.trim() !== '') {
+                    const phonePattern = /^[0-9]{10,11}$/;
+                    if (!phonePattern.test(phone.value.replace(/\s/g, ''))) {
+                        phoneError.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        phoneError.style.display = 'none';
+                    }
+                } else {
+                    phoneError.style.display = 'none';
+                }
+                
+                // Validate Subject
+                const subject = document.getElementById('Subject');
+                const subjectError = document.getElementById('subject-error');
+                if (subject.value === '') {
+                    subjectError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    subjectError.style.display = 'none';
+                }
+                
+                // Validate Message
+                const message = document.getElementById('Message');
+                const messageError = document.getElementById('message-error');
+                if (message.value.trim() === '') {
+                    messageError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    messageError.style.display = 'none';
+                }
+                
+                return isValid;
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- Thêm trực tiếp trong <body> hoặc cuối file -->
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

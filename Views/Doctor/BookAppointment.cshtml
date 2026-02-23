@@ -1,0 +1,44 @@
+﻿@model MeBeCare.Models.Appointment
+
+@{
+    ViewBag.Title = "Đặt lịch hẹn bác sĩ";
+    var doctors = ViewBag.Doctors as List<MeBeCare.Models.Doctor> ?? new List<MeBeCare.Models.Doctor>();
+}
+
+<h2 class="mb-4">📅 Đặt lịch hẹn với bác sĩ</h2>
+
+<form asp-action="BookAppointment" asp-controller="Doctor" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label>👨‍⚕️ Chọn bác sĩ:</label>
+        <select asp-for="DoctorID" class="form-control" required>
+            <option value="">-- Chọn bác sĩ --</option>
+            @foreach (var doctor in ViewBag.Doctors as List<MeBeCare.Models.Doctor>)
+            {
+                <option value="@doctor.DoctorID">
+                    @doctor.User.FirstName @doctor.User.LastName - @doctor.Specialty
+                </option>
+            }
+        </select>
+        <span asp-validation-for="DoctorID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>📅 Ngày hẹn:</label>
+        <input asp-for="AppointmentDate" type="datetime-local" class="form-control" required />
+        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>📝 Ghi chú:</label>
+        <textarea asp-for="Notes" class="form-control" placeholder="Triệu chứng, lý do khám..." rows="3"></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">📅 Đặt lịch</button>
+    <a asp-action="Index" class="btn btn-secondary mt-4">Huỷ</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

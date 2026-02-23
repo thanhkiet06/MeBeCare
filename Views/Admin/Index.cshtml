@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MeBeCare.Models.User>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var fullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName") ?? "Khách";
+}
+
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+        <div class="list-group shadow-sm">
+            <a asp-action="Index" asp-controller="Admin" class="list-group-item list-group-item-action active">
+                🧑‍💻 Quản lý Người dùng
+            </a>
+            <a asp-action="ManageVaccinations" asp-controller="Admin" class="list-group-item list-group-item-action">
+                💉 Lịch tiêm chủng
+            </a>
+            <a asp-action="ManageGrowthRecords" asp-controller="Admin" class="list-group-item list-group-item-action">
+                📈 Chỉ số phát triển
+            </a>
+            <a asp-action="ManageDoctors" asp-controller="Admin" class="list-group-item list-group-item-action">
+                🩺 Danh sách Bác sĩ
+            </a>
+            <a asp-action="ManageMedicalServices" asp-controller="Admin" class="list-group-item list-group-item-action">
+                🏥 Dịch vụ y tế
+            </a>
+            <a asp-action="ManageExperts" asp-controller="Admin" class="list-group-item list-group-item-action">
+                👨‍⚕️ Chuyên gia
+            </a>
+            <a asp-action="ManageArticles" asp-controller="Admin" class="list-group-item list-group-item-action">
+                📝 Bài viết
+            </a>
+            <a asp-action="ManageContacts" asp-controller="Admin" class="list-group-item list-group-item-action">
+                📬 Tin nhắn liên hệ
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+        <div class="card shadow p-4">
+            <h2 class="mb-3">🛠️ Quản lý Người dùng</h2>
+            <p>Xin chào, <strong>@fullName</strong>!</p>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>👤 Họ tên</th>
+                            <th>📧 Email</th>
+                            <th>🔐 Vai trò</th>
+                            <th style="width: 150px;">⚙️ Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.FirstName @user.LastName</td>
+                                <td>@user.Email</td>
+                                <td>@user.Role</td>
+                                <td>
+                                    <form asp-action="EditUser" asp-controller="Admin" asp-route-id="@user.UserID" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-warning">✏️ Sửa</button>
+                                    </form>
+                                    <form asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@user.UserID" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xóa người dùng này?');">
+                                        <button type="submit" class="btn btn-sm btn-danger">🗑️ Xoá</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">⚠️ Hiện chưa có người dùng nào trong hệ thống.</div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model MeBeCare.Models.Article
+
+@{
+    ViewData["Title"] = "Viết bài chuyên gia";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<h2 class="text-pink mb-3">📝 Viết bài chia sẻ từ chuyên gia</h2>
+
+<form asp-action="CreateArticle" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>Tiêu đề</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Nội dung</label>
+        <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Ảnh minh hoạ (tùy chọn)</label>
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Video minh hoạ (tùy chọn)</label>
+        <input type="file" name="VideoFile" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-pink mt-3">📤 Đăng bài</button>
+</form>
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/qh7irowt7361uq8g3cnyryr1tch04yttjrzjoz5rz0mrkvxk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#editor',
+            height: 300,
+            menubar: false,
+            plugins: 'lists link image preview fullscreen code',
+            toolbar: 'undo redo | formatselect | bold italic underline | bullist numlist | link image fullscreen code',
+            branding: false
+        });
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Đề xuất Dinh Dưỡng";
+    var children = ViewBag.Children as List<MeBeCare.Models.Child> ?? new();
+    var selectedId = ViewBag.SelectedChildId as int?;
+}
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <h2 class="text-center text-pink mb-4">🥗 Đề xuất Dinh Dưỡng Cho Bé</h2>
+
+    <form method="get" asp-action="NutritionSuggestions">
+        <div class="form-group mb-4">
+            <label for="childId" class="form-label">👶 Chọn bé:</label>
+            <select name="childId" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Chọn bé --</option>
+                @foreach (var c in children)
+                {
+                    var isSelected = c.ChildID == selectedId ? "selected" : "";
+                    <option value="@c.ChildID" selected="@isSelected">
+                        @c.FirstName @c.LastName
+                    </option>
+                }
+            </select>
+        </div>
+    </form>
+
+    @if (Model.Any())
+    {
+        <div class="card border-pink shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-pink">🍽️ Gợi ý thực đơn:</h5>
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i> @item
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-4">
+            <i class="bi bi-info-circle-fill"></i> Chưa có đề xuất vì bạn chưa chọn bé hoặc chưa có dữ liệu.
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-outline-secondary mt-4">
+        ⬅️ Quay lại
+    </a>
+</div>

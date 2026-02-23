@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MeBeCare.Models.Doctor>
+
+@{
+    ViewData["Title"] = "🩺 Quản lý Bác sĩ";
+}
+
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3 text-primary"><i class="bi bi-person-badge"></i> Quản lý Bác sĩ</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="CreateDoctor" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Thêm Bác sĩ
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ⬅️ Quay về Quản lý Người dùng
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>👤 Họ tên</th>
+                        <th>🩺 Chuyên khoa</th>
+                        <th>🏥 Bệnh viện</th>
+                        <th>⚙️ Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <td>@doctor.User?.FirstName @doctor.User?.LastName</td>
+                            <td>@doctor.Specialty</td>
+                            <td>@doctor.Hospital</td>
+                            <td>
+                                <a asp-action="EditDoctor" asp-route-id="@doctor.DoctorID" class="btn btn-sm btn-outline-primary me-1">
+                                    ✏️ Sửa
+                                </a>
+                                <form asp-action="DeleteDoctor" asp-route-id="@doctor.DoctorID" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xoá bác sĩ này?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        🗑️ Xoá
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">⚠️ Hiện chưa có bác sĩ nào được thêm vào hệ thống.</div>
+    }
+</div>

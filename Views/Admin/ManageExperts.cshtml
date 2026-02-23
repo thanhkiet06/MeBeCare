@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MeBeCare.Models.Expert>
+@{
+    ViewData["Title"] = "Quản lý Chuyên gia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary fw-bold">👩‍⚕️ Quản lý Chuyên gia</h2>
+        <div>
+            <a asp-action="CreateExpert" class="btn btn-pink me-2">➕ Thêm chuyên gia</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">⬅️ Quay về Người dùng</a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm rounded bg-white">
+            <thead class="table-pink text-center">
+                <tr>
+                    <th scope="col">👤 Tên</th>
+                    <th scope="col">📚 Chuyên môn</th>
+                    <th scope="col">🎓 Bằng cấp</th>
+                    <th scope="col">🧠 Kinh nghiệm</th>
+                    <th scope="col">⚙️ Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var expert in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (expert.User != null)
+                            {
+                                <strong><a href="mailto:@expert.User.Email">@expert.User.FirstName @expert.User.LastName</a></strong>
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">Chưa có người dùng</span>
+                            }
+                        </td>
+                        <td>@expert.Field</td>
+                        <td>@expert.Degree</td>
+                        <td>@expert.ExperienceYears năm</td>
+                        <td>
+                            <a asp-action="EditExpert" asp-route-id="@expert.ExpertID" class="btn btn-warning btn-sm me-1">✏️ Sửa</a>
+                            <form asp-action="DeleteExpert" asp-route-id="@expert.ExpertID" method="post" class="d-inline" onsubmit="return confirm('Xác nhận xoá chuyên gia?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">🗑️ Xoá</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .btn-pink {
+        background-color: #ff69b4;
+        color: white;
+    }
+
+        .btn-pink:hover {
+            background-color: #ff4fa1;
+            color: white;
+        }
+
+    .table-pink {
+        background-color: #ffe4ec;
+        color: #d63384;
+    }
+</style>

@@ -1,0 +1,69 @@
+﻿@model MeBeCare.Models.MedicalRecord
+@{
+    ViewBag.Title = "Chỉnh sửa Hồ sơ Sức khỏe";
+}
+
+<h2 class="mb-4">✏️ Chỉnh sửa Hồ sơ Sức khỏe</h2>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+
+<form asp-action="Edit" asp-route-id="@Model.MedicalRecordID" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="MedicalRecordID" />
+
+    <!-- ✅ THÊM Ở ĐÂY -->
+    @{
+        var children = ViewBag.Children as List<MeBeCare.Models.Child> ?? new List<MeBeCare.Models.Child>();
+    }
+
+    <div class="form-group">
+        <label>Chọn đối tượng</label>
+        <select asp-for="ChildID" class="form-control">
+            <option value="">🤱 Mẹ</option>
+            @foreach (var child in children)
+            {
+                <option value="@child.ChildID" selected="@(Model.ChildID == child.ChildID ? "selected" : null)">
+                    👶 Bé: @child.FirstName @child.LastName
+                </option>
+
+            }
+        </select>
+    </div>
+    
+    <!-- Phần còn lại của form -->
+    <div class="form-group mt-2">
+        <label>Loại hồ sơ</label>
+        <select asp-for="RecordType" class="form-control">
+            <option>Allergy</option>
+            <option>Condition</option>
+            <option>Medication</option>
+            <option>Other</option>
+        </select>
+        <span asp-validation-for="RecordType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Mô tả</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Hủy</a>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

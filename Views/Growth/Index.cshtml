@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MeBeCare.Models.GrowthRecord>
+<h2>📈 Chỉ Số Phát Triển</h2>
+
+<a class="btn btn-success mb-3" asp-action="Create">+ Thêm chỉ số</a>
+<a class="btn btn-info mb-3 ms-2" asp-action="Stats">📊 Thống kê chỉ số phát triển</a>
+<a class="btn btn-info mb-3" asp-action="NutritionSuggestions">🧠 Đề xuất dinh dưỡng</a>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>👶 Bé</th>
+            <th>Ngày ghi</th>
+            <th>Cân nặng (kg)</th>
+            <th>Chiều cao (cm)</th>
+            <th>Vòng đầu (cm)</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Child.FirstName @item.Child.LastName</td>
+                <td>@item.RecordDate.ToString("dd/MM/yyyy")</td> <!-- ✅ đúng -->
+                <td>@item.Weight</td>
+                <td>@item.Height</td>
+                <td>@item.HeadCircumference</td>
+                <td>@item.Notes</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GrowthRecordID" class="btn btn-sm btn-warning">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@item.GrowthRecordID" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xoá?');">Xoá</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="mt-4">
+    <a asp-controller="MedicalRecord" asp-action="Index" class="btn btn-outline-secondary">
+        ⬅️ Quay về Hồ sơ sức khỏe
+    </a>
+</div>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MeBeCare.Models.Child>
+
+@{
+    ViewBag.Title = "Danh sách bé";
+}
+
+<h2 class="mb-3">👶 Danh sách Bé</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Thêm Bé Mới</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Ngày tạo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var child in Model)
+        {
+            <tr>
+                <td>@child.FirstName @child.LastName</td>
+                <td>@child.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @{
+                        var genderLabel = child.Gender switch
+                        {
+                            "Male" => "Nam",
+                            "Female" => "Nữ",
+                            "Other" => "Khác",
+                            _ => "Không rõ"
+                        };
+                    }
+
+                <td>@genderLabel</td>
+
+                </td>
+                <td>@child.CreatedAt.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+﻿@model MeBeCare.Models.ExpertDashboardViewModel
+
+@{
+    ViewData["Title"] = "Bảng điều khiển chuyên gia";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<h2 class="text-pink mb-4">👨‍⚕️ Chào mừng bạn đến với Trang Chuyên Gia</h2>
+<style>
+    .btn-pink {
+        background-color: #f78fb3;
+        color: white;
+        border: none;
+    }
+
+        .btn-pink:hover {
+            background-color: #f368e0;
+        }
+
+    .table-pink th {
+        background-color: #f8c5d7;
+        color: #333;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>📈 Chỉ số phát triển của bé</h4>
+        <table class="table table-hover">
+            <thead class="table-pink">
+                <tr>
+                    <th>Bé</th>
+                    <th>Ngày</th>
+                    <th>Cân nặng</th>
+                    <th>Chiều cao</th>
+                    <th>Vòng đầu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.GrowthRecords)
+                {
+                    <tr>
+                        <td>@record.Child.FirstName @record.Child.LastName</td>
+                        <td>@record.RecordDate.ToString("dd/MM/yyyy")</td>
+                        <td>@record.Weight kg</td>
+                        <td>@record.Height cm</td>
+                        <td>@record.HeadCircumference cm</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h4>📝 Bài viết của bạn</h4>
+        <ul class="list-group mb-2">
+            @foreach (var post in Model.Articles)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@post.Title</span>
+                    <div>
+                        <a asp-controller="Home" asp-action="ArticleDetail" asp-route-id="@post.ArticleID" class="btn btn-sm btn-outline-secondary me-2">Xem</a>
+
+                        <form asp-controller="Expert" asp-action="DeleteArticle" asp-route-id="@post.ArticleID"
+                              method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn xoá bài viết này?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Xoá</button>
+                        </form>
+
+                        <a asp-controller="Expert" asp-action="EditArticle" asp-route-id="@post.ArticleID" class="btn btn-sm btn-outline-warning me-2">✏️ Sửa</a>
+                    </div>
+                </li>
+
+            }
+        </ul>
+        <a asp-action="CreateArticle" class="btn btn-pink">➕ Viết bài mới</a>
+    </div>
+</div>

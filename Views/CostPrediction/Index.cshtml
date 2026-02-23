@@ -1,0 +1,121 @@
+﻿@model MeBeCare.Models.CostPredictionViewModel
+@{
+    ViewData["Title"] = "Dự đoán chi phí";
+}
+
+<h2 class="mb-4">💰 Dự đoán chi phí chăm sóc mẹ và bé</h2>
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label>🔍 Loại chi phí</label>
+        <select asp-for="Category" class="form-control" onchange="toggleChildbirthSection()">
+            <option value="">-- Chọn loại --</option>
+            <option value="Medical">Khám & điều trị</option>
+            <option value="Vaccination">Tiêm chủng</option>
+            <option value="Consultation">Tư vấn sức khỏe</option>
+            <option value="Childbirth">Sinh đẻ</option>
+            <option value="Other">Khác</option>
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>🕒 Thời gian (tháng)</label>
+        <input asp-for="DurationInMonths" type="number" class="form-control" />
+        <span asp-validation-for="DurationInMonths" class="text-danger"></span>
+    </div>
+
+    <!-- Phần chọn loại sinh -->
+    <div id="childbirthSection" style="display:none;" class="form-group mt-2">
+        <label>🤰 Loại sinh</label>
+        <select asp-for="ChildbirthType" class="form-control">
+            <option value="">-- Chọn loại sinh --</option>
+            <option value="Normal">Sinh thường</option>
+            <option value="C-section">Sinh mổ</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">📊 Dự đoán chi phí</button>
+</form>
+
+@if (Model.PredictedCost > 0)
+{
+    <div class="mt-5 alert alert-info">
+        <h4>📈 Kết quả ước tính:</h4>
+        <ul>
+            @if (Model.MedicationCost > 0)
+            {
+                <li>💊 Thuốc men: <strong>@Model.MedicationCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.DoctorFee > 0)
+            {
+                <li>👨‍⚕️ Phí khám: <strong>@Model.DoctorFee.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.LabTestCost > 0)
+            {
+                <li>🧪 Xét nghiệm: <strong>@Model.LabTestCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.VaccinationCost > 0)
+            {
+                <li>💉 Tiêm chủng: <strong>@Model.VaccinationCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.ChildbirthType != null)
+            {
+                <li>🏥 Sinh đẻ (@Model.ChildbirthType):</li>
+                <ul>
+                    <li>🚼 Phí sinh: <strong>@Model.DeliveryCost.ToString("N0") VNĐ</strong></li>
+                    @if (Model.AnesthesiaCost > 0)
+                    {
+                        <li>💉 Gây tê: <strong>@Model.AnesthesiaCost.ToString("N0") VNĐ</strong></li>
+                    }
+                    <li>🛏️ Nằm viện: <strong>@Model.HospitalStayCost.ToString("N0") VNĐ</strong></li>
+                    <li>👩‍⚕️ Chăm sóc sau sinh: <strong>@Model.PostpartumCareCost.ToString("N0") VNĐ</strong></li>
+                </ul>
+            }
+            @if (Model.OtherCost > 0)
+            {
+                <li>🛒 Khác: <strong>@Model.OtherCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.SupplementCost > 0)
+            {
+                <li>🍊 Thuốc bổ sung: <strong>@Model.SupplementCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.UltrasoundCost > 0)
+            {
+                <li>🔬 Siêu âm: <strong>@Model.UltrasoundCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.AmbulanceCost > 0)
+            {
+                <li>🚑 Xe cứu thương: <strong>@Model.AmbulanceCost.ToString("N0") VNĐ</strong></li>
+            }
+            @if (Model.BabyCareCost > 0)
+            {
+                <li>👶 Chăm sóc bé: <strong>@Model.BabyCareCost.ToString("N0") VNĐ</strong></li>
+            }
+
+        </ul>
+        <h5>💸 Tổng chi phí dự đoán: <strong class="text-primary">@Model.PredictedCost.ToString("N0") VNĐ</strong></h5>
+    </div>
+}
+@if (Model.PredictedCost == 0)
+{
+    <div class="alert alert-warning">
+        ⚠️ Không có dữ liệu dự đoán chi phí. Vui lòng nhập đầy đủ thông tin.
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function toggleChildbirthSection() {
+            var selected = document.querySelector('[name="Category"]').value;
+            document.getElementById("childbirthSection").style.display = selected === "Childbirth" ? "block" : "none";
+        }
+        document.addEventListener("DOMContentLoaded", toggleChildbirthSection);
+    </script>
+}
+<div class="mt-4">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+        🏠 Quay về Trang Chủ
+    </a>
+</div>

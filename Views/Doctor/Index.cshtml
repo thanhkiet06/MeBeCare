@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MeBeCare.Models.Doctor>
+
+@{
+    ViewBag.Title = "Kết nối với bác sĩ";
+}
+
+
+<h2 class="mb-4">👨‍⚕️ Danh sách bác sĩ</h2>
+
+<!-- Thanh tìm kiếm -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Tìm bác sĩ theo tên, chuyên khoa hoặc bệnh viện..." value="@ViewBag.SearchString" />
+        <button class="btn btn-primary" type="submit">🔍 Tìm kiếm</button>
+    </div>
+</form>
+
+<!-- Hiển thị danh sách bác sĩ -->
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">
+        Không tìm thấy bác sĩ nào phù hợp.
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var doctor in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">👨‍⚕️ @doctor.User.FirstName @doctor.User.LastName</h5>
+                        <p class="card-text">
+                            <strong>Chuyên môn:</strong> @doctor.Specialty <br />
+                            <strong>Bệnh viện:</strong> @doctor.Hospital
+                        </p>
+                        <p class="card-text">
+                            <small>@doctor.Bio?.Substring(0, Math.Min(100, doctor.Bio.Length))... </small>
+                        </p>
+                        <a asp-action="Details" asp-route-id="@doctor.DoctorID" class="btn btn-outline-primary mt-2">🔎 Xem chi tiết</a>
+                        <a asp-action="BookAppointment" asp-route-id="@doctor.DoctorID" class="btn btn-primary mt-2">📅 Đặt lịch hẹn</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+<!-- Thông tin tổng quan -->
+<div class="alert alert-info mt-4">
+    <h4>📊 Tổng quan:</h4>
+    <ul>
+        <li><strong>Tổng số bác sĩ:</strong> @Model.Count()</li>
+        <li><strong>Tìm kiếm theo:</strong> @ViewBag.SearchString</li>
+    </ul>
+</div>
+<p>💡 Bạn có thể tìm kiếm theo tên bác sĩ, chuyên khoa hoặc bệnh viện.</p>
+<p>🔍 Nếu bạn không tìm thấy bác sĩ mong muốn, hãy thử lại với từ khóa khác.</p>
+<p>📞 Để đặt lịch hẹn, hãy liên hệ trực tiếp với bác sĩ qua thông tin liên lạc bên dưới.</p>
+
+<div class="mt-4">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+        🏠 Quay về Trang Chủ
+    </a>
+</div>
+
+

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MeBeCare.Models.MedicalRecord>
+@{
+    ViewBag.Title = "Quản lý Hồ sơ Sức khỏe Mẹ và Bé";
+}
+
+<h2 class="mb-3">🩺 Hồ sơ Sức Khỏe Mẹ và Bé</h2>
+
+<!-- Thông báo nếu có -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+<!-- Các liên kết chuyển nhanh -->
+<div class="mb-4">
+    <a href="/Vaccination/Index" class="btn btn-outline-primary me-2">💉 Lịch tiêm chủng</a>
+    <a href="/Growth/Index" class="btn btn-outline-info me-2">📈 Chỉ số phát triển</a>
+    <a asp-action="Create" class="btn btn-success">➕ Thêm hồ sơ</a>
+</div>
+
+<!-- Bảng hồ sơ -->
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Đối tượng</th>
+            <th>Loại hồ sơ</th>
+            <th>Mô tả</th>
+            <th>Ngày cập nhật</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string icon = item.RecordType switch
+            {
+                "Allergy" => "🤧",
+                "Condition" => "🩺",
+                "Medication" => "💊",
+                "Vaccination" => "💉",
+                "Growth" => "📈",
+                _ => "📁"
+            };
+
+            <tr>
+                <td>
+                    @if (item.Child != null)
+                    {
+                        <span class="text-primary">👶 Bé: @item.Child.FirstName @item.Child.LastName</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">🤱 Mẹ</span>
+                    }
+                </td>
+                <td>@icon @item.RecordType</td>
+                <td>@item.Description</td>
+                <td>@item.UpdatedAt.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MedicalRecordID" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.MedicalRecordID" class="btn btn-sm btn-danger">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="mt-4">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+        🏠 Quay về Trang Chủ
+    </a>
+</div>
+

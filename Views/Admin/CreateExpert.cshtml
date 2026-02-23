@@ -1,0 +1,55 @@
+﻿@model MeBeCare.Models.Expert
+@{
+    ViewData["Title"] = "Thêm chuyên gia";
+}
+
+<h2>➕ Thêm chuyên gia</h2>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+<form asp-action="CreateExpert" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>Chọn người dùng (chuyên gia)</label>
+        <select asp-for="UserID" class="form-control" asp-items="ViewBag.Users">
+            <option value="">-- Chọn người dùng --</option>
+        </select>
+        <span asp-validation-for="UserID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Chuyên môn</label>
+        <input asp-for="Field" class="form-control" />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Bằng cấp</label>
+        <input asp-for="Degree" class="form-control" />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Kinh nghiệm (năm)</label>
+        <input asp-for="ExperienceYears" class="form-control" />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Tiểu sử</label>
+        <textarea asp-for="Bio" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh đại diện</label>
+        <input type="file" name="ImageFile" class="form-control" />
+        <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">💾 Lưu</button>
+    <a asp-action="ManageExperts" class="btn btn-secondary mt-3">❌ Hủy</a>
+</form>

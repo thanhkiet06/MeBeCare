@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="~/css/site.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống quản lý sức khỏe mẹ và bé</title>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2>Chăm sóc sức khỏe mẹ và bé toàn diện</h2>
+                <p>Hệ thống quản lý thông tin sức khỏe thông minh giúp theo dõi, lưu trữ và quản lý thông tin sức khỏe cho mẹ và bé một cách dễ dàng, an toàn và hiệu quả.</p>
+                <button class="cta-btn" onclick="openQuizModal()">Bắt đầu ngay</button>
+            </div>
+            <div class="hero-image">
+                <img src="https://khoinguonsangtao.vn/wp-content/uploads/2022/10/hinh-anh-me-va-be-hoat-hinh.jpg" alt="Mẹ và bé">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h3>Tính năng</h3>
+                <p>Những tính năng thiết thực giúp bạn quản lý sức khỏe của mẹ và bé một cách tối ưu</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <a asp-controller="ThaiKy" asp-action="Index" style="text-decoration: none;">
+                        <div class="feature-icon pink">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B9C" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Theo dõi thai kỳ</h4>
+                        <p class="feature-desc">Theo dõi sự phát triển của thai nhi theo từng tuần, nhận thông tin và lời khuyên phù hợp với giai đoạn thai kỳ.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a asp-controller="MedicalRecord" asp-action="Index" style="text-decoration: none;">
+                        <div class="feature-icon blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#6BA6FF" stroke-width="2">
+                                <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                <path d="M12 11.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Hồ sơ sức khỏe</h4>
+                        <p class="feature-desc">Lưu trữ và quản lý hồ sơ sức khỏe của mẹ và bé, bao gồm lịch tiêm chủng, chỉ số phát triển, và các thông tin y tế quan trọng.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a asp-controller="Doctor" asp-action="Index" style="text-decoration: none;">
+                    <div class="feature-icon green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7DCEA0" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Kết nối bác sĩ</h4>
+                    <p class="feature-desc">Dễ dàng kết nối và trao đổi với các bác sĩ, chuyên gia y tế để được tư vấn kịp thời về các vấn đề sức khỏe.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a asp-controller="MedicalService" asp-action="Index" style="text-decoration: none;">
+                    <div class="feature-icon pink">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B9C" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Tìm kiếm dịch vụ</h4>
+                    <p class="feature-desc">Tìm kiếm các dịch vụ y tế, phòng khám, bệnh viện phù hợp gần khu vực của bạn với đánh giá và phản hồi từ người dùng.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a asp-controller="Chatbot" asp-action="Index" style="text-decoration: none;">
+                    <div class="feature-icon blue">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#6BA6FF" stroke-width="2">
+                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                         <circle cx="8.5" cy="7" r="4"></circle>
+                         <path d="M20 8v6M23 11h-6"></path>
+                         </svg>
+                    </div>
+                    <h4 class="feature-title">Chatbot AI</h4>
+                    <p class="feature-desc">Chatbot hỗ trợ mẹ và bé, cung cấp lời khuyên và hỗ trợ tinh thần cho người sử dụng</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a asp-controller="CostPrediction" asp-action="Index" style="text-decoration: none;">
+                        <div class="feature-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#7DCEA0" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Dự đoán chi phí</h4>
+                        <p class="feature-desc">
+                            Quản lý và theo dõi chi phí y tế, chăm sóc sức khỏe và các khoản chi tiêu liên quan đến mẹ và bé.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h3>Cách hệ thống hoạt động</h3>
+                <p>Quy trình đơn giản để bắt đầu sử dụng hệ thống quản lý sức khỏe mẹ và bé</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title">Đăng ký tài khoản</h4>
+                    <p class="step-desc">Tạo tài khoản cá nhân và hoàn thành thông tin cơ bản về bạn và bé</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4 class="step-title">Nhập thông tin sức khỏe</h4>
+                    <p class="step-desc">Cập nhật thông tin sức khỏe, lịch sử y tế và các chỉ số quan trọng</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4 class="step-title">Nhận lời khuyên</h4>
+                    <p class="step-desc">Nhận các lời khuyên và hướng dẫn tùy chỉnh dựa trên thông tin của bạn</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4 class="step-title">Theo dõi tiến triển</h4>
+                    <p class="step-desc">Theo dõi sự phát triển của bé và sức khỏe của mẹ qua thời gian</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h3>Phản hồi từ người dùng</h3>
+                <p>Chia sẻ từ các bà mẹ đã và đang sử dụng hệ thống</p>
+            </div>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Hệ thống giúp tôi theo dõi sức khỏe của bé một cách dễ dàng. Tôi có thể lưu trữ tất cả thông tin quan trọng và chia sẻ với bác sĩ khi cần thiết. Thật sự rất tiện lợi!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="/api/placeholder/50/50" alt="Chị Hương">
+                        </div>
+                        <div class="author-info">
+                            <h4>Chị Hương</h4>
+                            <p>Mẹ bé 18 tháng tuổi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Tính năng theo dõi thai kỳ rất chi tiết và hữu ích. Tôi thích cách hệ thống gửi thông báo nhắc nhở các buổi khám thai và cung cấp thông tin về sự phát triển của bé theo từng tuần."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="/api/placeholder/50/50" alt="Chị Linh">
+                        </div>
+                        <div class="author-info">
+                            <h4>Chị Linh</h4>
+                            <p>Mẹ bầu 28 tuần</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Cộng đồng hỗ trợ trên hệ thống giúp tôi kết nối với nhiều bà mẹ khác và nhận được nhiều lời khuyên quý báu. Đây là nguồn hỗ trợ tinh thần tuyệt vời cho tôi trong quá trình nuôi con."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="/api/placeholder/50/50" alt="Chị Trang">
+                        </div>
+                        <div class="author-info">
+                            <h4>Chị Trang</h4>
+                            <p>Mẹ của 2 bé</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container cta-content">
+            <h3>Bắt đầu hành trình chăm sóc sức khỏe</h3>
+            <p>Đăng ký ngay hôm nay để theo dõi sức khỏe của mẹ và bé một cách toàn diện. Miễn phí 30 ngày đầu tiên!</p>
+            <div class="cta-buttons">
+                <a href="/Account/Register" class="btn btn-pink">Đăng ký ngay</a>
+                <a href="/Home/About" class="btn btn-outline-light">Tìm hiểu thêm</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <img src="https://insacmau.com/wp-content/uploads/2024/12/logo-me-be-8.jpg" alt="Logo">
+                    <p>Hệ thống quản lý sức khỏe mẹ và bé giúp theo dõi, lưu trữ và quản lý thông tin sức khỏe một cách dễ dàng và hiệu quả.</p>
+                    <div class="social-links">
+                        <a href="#"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg></a>
+                        <a href="#"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
+                        <a href="#"><svg viewBox="0 0 24 24"><path d="M16.5 3h-9A4.5 4.5 0 003 3h-9A4.5 4.5 0 003 7.5v9A4.5 4.5 0 007.5 21h9a4.5 4.5 0 004.5-4.5v-9A4.5 4.5 0 0016.5 3zM16 11a4 4 0 11-4-4 4 4 0 014 4zM7 5h2v2H7z"></path></svg></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Danh mục</h4>
+                    <ul>
+                        <li><a href="/Home">Trang chủ</a></li>
+                        <li><a href="#">Tính năng</a></li>
+                        <li><a href="/Home/HuongDan">Hướng dẫn</a></li>
+                        <li><a href="/Home/ChuyenGia">Chuyên gia</a></li>
+                        <li><a href="/Home/LienHe">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="/Home/FAQ">Câu hỏi thường gặp</a></li>
+                        <li><a href="/Home/Privacy">Chính sách bảo mật</a></li>
+                        <li><a href="/Home/Terms">Điều khoản sử dụng</a></li>
+                        <li><a href="/Home/Support">Hỗ trợ kỹ thuật</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Liên hệ</h4>
+                    <ul>
+                        <li><a href="#">Email: support@mebe.vn</a></li>
+                        <li><a href="#">Hotline: 0988 605 814</a></li>
+                        <li><a href="#">Địa chỉ: Hồ Chí Minh, Việt Nam</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Quiz -->
+    <div class="modal" id="quizModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeQuizModal()">×</button>
+            <h3>Khám phá tính năng phù hợp</h3>
+            <p class="subtitle">Chỉ mất 2 bước để tìm giải pháp tốt nhất cho bạn!</p>
+
+            <!-- Step 1 -->
+            <div class="quiz-step active" id="step1">
+                <div class="step-indicator">Bước 1/2</div>
+                <p>Bạn hiện đang ở giai đoạn nào?</p>
+                <input type="radio" name="stage" value="pregnant" id="pregnant">
+                <label for="pregnant">Mẹ bầu</label>
+                <input type="radio" name="stage" value="postpartum" id="postpartum">
+                <label for="postpartum">Mẹ sau sinh</label>
+                <input type="radio" name="stage" value="parent" id="parent">
+                <label for="parent">Đã có bé</label>
+                <div class="quiz-buttons">
+                    <button class="next-btn" onclick="nextStep(1)">Tiếp theo</button>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="quiz-step" id="step2">
+                <div class="step-indicator">Bước 2/2</div>
+                <p>Điều bạn quan tâm nhất là gì?</p>
+                <input type="radio" name="interest" value="tracking" id="tracking">
+                <label for="tracking">Theo dõi sức khỏe</label>
+                <input type="radio" name="interest" value="doctor" id="doctor">
+                <label for="doctor">Kết nối với bác sĩ</label>
+                <input type="radio" name="interest" value="community" id="community">
+                <label for="community">Kết nối cộng đồng</label>
+                <div class="quiz-buttons">
+                    <button class="prev-btn" onclick="prevStep(2)">Quay lại</button>
+                    <button class="submit-btn" onclick="submitQuiz()">Xem gợi ý</button>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="quiz-result" id="quizResult">
+                <p id="resultText"></p>
+                <a href="#" class="cta-link" id="resultCta">Tìm hiểu thêm</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openQuizModal() {
+            const modal = document.getElementById('quizModal');
+            modal.classList.add('active');
+            resetQuiz();
+        }
+
+        function closeQuizModal() {
+            const modal = document.getElementById('quizModal');
+            modal.classList.remove('active');
+            resetQuiz();
+        }
+
+        function resetQuiz() {
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('quizResult').classList.remove('active');
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+        }
+
+        function nextStep(currentStep) {
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const stage = document.querySelector('input[name="stage"]:checked');
+
+            if (currentStep === 1 && !stage) {
+                alert('Vui lòng chọn một giai đoạn!');
+                return;
+            }
+
+            step1.classList.remove('active');
+            step2.classList.add('active');
+        }
+
+        function prevStep(currentStep) {
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            step2.classList.remove('active');
+            step1.classList.add('active');
+        }
+
+        function submitQuiz() {
+            const stage = document.querySelector('input[name="stage"]:checked')?.value;
+            const interest = document.querySelector('input[name="interest"]:checked')?.value;
+
+            if (!interest) {
+                alert('Vui lòng chọn một mối quan tâm!');
+                return;
+            }
+
+            let resultText = '';
+            let ctaLink = '';
+
+            if (stage === 'pregnant' && interest === 'tracking') {
+                resultText = 'Chúng tôi gợi ý bạn sử dụng tính năng <strong>Theo dõi thai kỳ</strong> để nhận thông tin chi tiết về sự phát triển của bé!';
+                ctaLink = '/ThaiKy/Index';
+            } else if (stage === 'postpartum' && interest === 'doctor') {
+                resultText = 'Bạn nên thử tính năng <strong>Kết nối bác sĩ</strong> để được tư vấn kịp thời về sức khỏe sau sinh!';
+                ctaLink = '/Home/ChuyenGia';
+            } else if (stage === 'parent' && interest === 'community') {
+                resultText = 'Tính năng <strong>Cộng đồng hỗ trợ</strong> sẽ giúp bạn kết nối với các bà mẹ khác và chia sẻ kinh nghiệm!';
+                ctaLink = '/Home/TinhNang#cong-dong-ho-tro';
+            } else {
+                resultText = 'Hãy khám phá các tính năng của chúng tôi để tìm giải pháp phù hợp nhất cho bạn!';
+                ctaLink = '/Home/TinhNang';
+            }
+
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('quizResult').classList.add('active');
+            document.getElementById('resultText').innerHTML = resultText;
+            document.getElementById('resultCta').href = ctaLink;
+        }
+
+        // Đóng modal quiz khi nhấp ra ngoài
+        window.onclick = function(event) {
+            const quizModal = document.getElementById('quizModal');
+            if (event.target === quizModal) {
+                quizModal.classList.remove('active');
+                resetQuiz();
+            }
+        }
+    </script>
+</body>
+</html>

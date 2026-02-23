@@ -1,0 +1,15 @@
+﻿@model MeBeCare.Models.User
+
+<h2>Xác nhận xoá người dùng</h2>
+
+<div class="alert alert-danger">
+    <strong>Bạn có chắc chắn muốn xoá người dùng này không?</strong><br />
+    <b>Họ tên:</b> @Model.FirstName @Model.LastName <br />
+    <b>Email:</b> @Model.Email
+</div>
+
+<form asp-action="DeleteUser" method="post">
+    <input type="hidden" asp-for="UserID" />
+    <button type="submit" class="btn btn-danger">Xác nhận xoá</button>
+    <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+</form>

@@ -1,0 +1,62 @@
+﻿@model MeBeCare.Models.Article
+
+@{
+    ViewData["Title"] = "Chỉnh sửa bài viết";
+}
+
+<h2 class="text-pink mb-3">✏️ Chỉnh sửa bài viết</h2>
+
+<form asp-action="EditArticle" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ArticleID" />
+    <input type="hidden" asp-for="AuthorID" />
+
+    <div class="form-group">
+        <label>Tiêu đề</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Nội dung</label>
+        <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Ảnh minh hoạ (nếu muốn cập nhật)</label>
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Video minh hoạ (nếu muốn cập nhật)</label>
+        <input type="file" name="VideoFile" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-warning mt-3">💾 Cập nhật</button>
+    <a asp-action="Dashboard" class="btn btn-secondary mt-3">❌ Huỷ</a>
+</form>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#editor',
+        height: 300,
+        plugins: 'lists link image media code fullscreen',
+        toolbar: 'undo redo | bold italic underline | bullist numlist | link image media | fullscreen code',
+        branding: false
+    });
+</script>
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/qh7irowt7361uq8g3cnyryr1tch04yttjrzjoz5rz0mrkvxk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#editor',
+            height: 300,
+            menubar: false,
+            plugins: 'lists link image preview fullscreen code',
+            toolbar: 'undo redo | formatselect | bold italic underline | bullist numlist | link image fullscreen code',
+            branding: false
+        });
+    </script>
+}

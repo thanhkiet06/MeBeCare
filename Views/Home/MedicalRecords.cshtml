@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MeBeCare.Models.MedicalRecord>
+@{
+    ViewBag.Title = "Hồ Sơ Sức Khỏe";
+}
+
+<h2 class="mt-4 mb-3">🩺 Hồ Sơ Sức Khỏe Của Bạn</h2>
+
+@if (!Model.Any())
+{
+    <p>Bạn chưa có hồ sơ sức khỏe nào được ghi nhận.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Loại</th>
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+                <th>Ghi chú thêm</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.RecordType</td>
+                    <td>@record.Description</td>
+                    <td>@record.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    <td>@record.UpdatedAt.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

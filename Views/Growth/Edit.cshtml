@@ -1,0 +1,53 @@
+﻿@model MeBeCare.Models.GrowthRecord
+@{
+    ViewBag.Title = "Chỉnh sửa Chỉ số Phát triển";
+    var children = ViewBag.Children as List<MeBeCare.Models.Child> ?? new List<MeBeCare.Models.Child>();
+}
+
+<h2>✏️ Chỉnh sửa Chỉ số Phát triển</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.GrowthRecordID" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="GrowthRecordID" />
+    <input type="hidden" asp-for="ChildID" /> @* Thêm hidden input để gửi ChildID *@
+
+    <div class="form-group">
+        <label>Chọn bé</label>
+        <select asp-for="ChildID" class="form-control" disabled>
+            @foreach (var child in children)
+            {
+                <option value="@child.ChildID" selected="@(child.ChildID == Model.ChildID)">
+                    @child.FirstName @child.LastName
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Ngày ghi nhận</label>
+        <input asp-for="RecordDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Cân nặng (kg)</label>
+        <input asp-for="Weight" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Chiều cao (cm)</label>
+        <input asp-for="Height" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Vòng đầu (cm)</label>
+        <input asp-for="HeadCircumference" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Ghi chú</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Huỷ</a>
+</form>

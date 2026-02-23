@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MeBeCare.Models.GrowthRecord>
+
+@{
+    ViewData["Title"] = "📊 Quản lý Chỉ số Phát triển";
+}
+
+<div class="card shadow-sm p-4 mb-4">
+    <h2 class="mb-3 text-primary"><i class="bi bi-graph-up-arrow"></i> Quản lý Chỉ số Phát triển</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <a asp-action="Index" class="btn btn-outline-secondary mb-3">⬅️ Quay về Quản lý Người dùng</a>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>👶 Bé</th>
+                        <th>📅 Ngày ghi</th>
+                        <th>⚖️ Cân nặng (kg)</th>
+                        <th>📏 Chiều cao (cm)</th>
+                        <th>🧠 Vòng đầu (cm)</th>
+                        <th>📝 Ghi chú</th>
+                        <th>⚙️ Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Child.FirstName @item.Child.LastName</td>
+                            <td>@item.RecordDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Weight</td>
+                            <td>@item.Height</td>
+                            <td>@item.HeadCircumference</td>
+                            <td>@item.Notes</td>
+                            <td>
+                                <a asp-action="EditGrowthRecord" asp-route-id="@item.GrowthRecordID" class="btn btn-sm btn-outline-primary me-1">
+                                    ✏️ Sửa
+                                </a>
+                                <form asp-action="DeleteGrowthRecord" asp-route-id="@item.GrowthRecordID" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xoá?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Xoá</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">⚠️ Chưa có chỉ số phát triển nào được ghi nhận.</div>
+    }
+</div>

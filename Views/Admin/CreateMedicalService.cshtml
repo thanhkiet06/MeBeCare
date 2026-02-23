@@ -1,0 +1,49 @@
+﻿@model MeBeCare.Models.MedicalService
+@{
+    ViewData["Title"] = "Thêm Dịch vụ Y tế";
+}
+
+<h2>➕ Thêm Dịch vụ Y tế</h2>
+
+<form asp-action="CreateMedicalService" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="Name">Tên dịch vụ</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Type">Loại</label>
+        <select asp-for="Type" class="form-select">
+            <option value="Hospital">Bệnh viện</option>
+            <option value="Clinic">Phòng khám</option>
+            <option value="Pharmacy">Nhà thuốc</option>
+            <option value="Other">Khác</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="Address">Địa chỉ</label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Phone">Số điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Mô tả</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Rating">Đánh giá (1 - 5)</label>
+        <input asp-for="Rating" class="form-control" type="number" min="1" max="5" step="0.1" />
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">💾 Lưu</button>
+    <a asp-action="ManageMedicalServices" class="btn btn-secondary mt-3">❌ Hủy</a>
+</form>

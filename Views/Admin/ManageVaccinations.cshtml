@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MeBeCare.Models.VaccinationRecord>
+
+@{
+    ViewData["Title"] = "💉 Quản lý Lịch Tiêm Chủng";
+}
+
+<div class="card shadow-sm p-4 mb-4">
+    <h2 class="mb-3 text-primary"><i class="bi bi-syringe"></i> Quản lý Lịch Tiêm Chủng</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <a asp-action="Index" class="btn btn-outline-secondary mb-3">⬅️ Quay về Quản lý Người dùng</a>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">👶 Bé</th>
+                        <th scope="col">💉 Tên vắc-xin</th>
+                        <th scope="col">📅 Ngày tiêm</th>
+                        <th scope="col">📌 Trạng thái</th>
+                        <th scope="col">📝 Ghi chú</th>
+                        <th scope="col">⚙️ Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.Child != null ? item.Child.FirstName + " " + item.Child.LastName : "<i>Không xác định</i>")</td>
+                            <td>@item.VaccineName</td>
+                            <td>@item.VaccinationDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span class="badge
+                                    @(item.Status switch
+                                    {
+                                        "Completed" => "bg-success",
+                                        "Pending" => "bg-warning text-dark",
+                                        "Missed" => "bg-danger",
+                                        _ => "bg-secondary"
+                                    })">
+                                    @item.Status
+                                </span>
+                            </td>
+                            <td>@item.Notes</td>
+                            <td>
+                                <a asp-action="EditVaccination" asp-route-id="@item.VaccinationID" class="btn btn-sm btn-outline-primary me-1">
+                                    ✏️ Sửa
+                                </a>
+                                <form asp-action="DeleteVaccination" asp-route-id="@item.VaccinationID" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xóa lịch tiêm này không?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">⚠️ Chưa có lịch tiêm chủng nào trong hệ thống.</div>
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@model MeBeCare.Models.Doctor
+@{
+    ViewData["Title"] = "Thêm Bác sĩ";
+    var users = ViewBag.Users as List<MeBeCare.Models.User>;
+}
+
+<h2>➕ Thêm Bác sĩ</h2>
+
+<form asp-action="CreateDoctor" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>👤 Chọn người dùng</label>
+        <select asp-for="UserID" class="form-control">
+            <option value="">-- Chọn người dùng --</option>
+            @foreach (var u in users)
+            {
+                <option value="@u.UserID">@u.FirstName @u.LastName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>🧬 Chuyên khoa</label>
+        <input asp-for="Specialty" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>🏥 Bệnh viện</label>
+        <input asp-for="Hospital" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>📃 Giới thiệu</label>
+        <textarea asp-for="Bio" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">💾 Lưu</button>
+    <a asp-action="ManageDoctors" class="btn btn-secondary mt-3">❌ Hủy</a>
+</form>

@@ -1,0 +1,59 @@
+﻿@model MeBeCare.Models.User
+
+@{
+    Layout = "_Layout";   // nếu bạn dùng layout chung
+    ViewBag.Title = "Chỉnh sửa người dùng";
+}
+
+<h2>✏️ Chỉnh sửa thông tin người dùng</h2>
+
+<form asp-action="EditUser" asp-route-id="@Model.UserID" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Bắt buộc: phải bind được UserID -->
+    <input asp-for="UserID" type="hidden" />
+
+    <div class="mb-3">
+        <label asp-for="FirstName" class="form-label">Họ</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName" class="form-label">Tên</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label">Số điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Địa chỉ</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Role" class="form-label">Vai trò</label>
+        <select asp-for="Role" class="form-select">
+            <option value="Mother">Mother</option>
+            <option value="Father">Father</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Expert">Expert</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Lưu thay đổi</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">❌ Hủy</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

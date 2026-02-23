@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MeBeCare.Models.ContactMessage>
+
+<h2>📥 Tin nhắn liên hệ</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Chủ đề</th>
+            <th>Tin nhắn</th>
+            <th>Phản hồi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var msg in Model)
+        {
+            <tr>
+                <td>@msg.FullName</td>
+                <td>@msg.Email</td>
+                <td>@msg.Subject</td>
+                <td>@msg.Message</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(msg.AdminReply))
+                    {
+                        <div><strong>Đã phản hồi:</strong> @msg.AdminReply</div>
+                    }
+                    else
+                    {
+                        <form asp-action="Reply" method="post">
+                            <input type="hidden" name="id" value="@msg.ContactMessageID" />
+                            <textarea name="adminReply" class="form-control" rows="2"></textarea>
+                            <button type="submit" class="btn btn-sm btn-success mt-1">Gửi</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-outline-secondary">
+    ⬅️ Quay về Quản lý Người dùng
+</a>

@@ -1,0 +1,28 @@
+﻿@model MeBeCare.Models.Doctor
+
+@{
+    ViewBag.Title = "Thông tin bác sĩ";
+}
+
+<h2 class="mb-4">👨‍⚕️ Thông tin chi tiết bác sĩ</h2>
+
+<div class="card shadow-lg p-4">
+    <h3>👨‍⚕️ @Model.User.FirstName @Model.User.LastName</h3>
+
+    <p><strong>Chuyên môn:</strong> @Model.Specialty</p>
+    <p><strong>Bệnh viện:</strong> @Model.Hospital</p>
+
+    <div class="mb-3">
+        <strong>Tiểu sử:</strong>
+        <p>@Model.Bio</p>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">
+            ⬅️ Quay lại danh sách bác sĩ
+        </a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=@Model.User.Email" target="_blank" class="btn btn-primary">
+            📧 Gửi email liên hệ
+        </a>
+    </div>
+</div>

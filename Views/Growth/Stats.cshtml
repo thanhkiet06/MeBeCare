@@ -1,0 +1,60 @@
+﻿@model List<MeBeCare.Models.GrowthRecord>
+
+<h2>📊 Biểu đồ Chỉ Số Phát Triển Theo Bé</h2>
+@{
+    var children = ViewBag.Children as List<MeBeCare.Models.Child> ?? new List<MeBeCare.Models.Child>();
+}
+
+<form asp-action="Stats" method="get" class="mb-4">
+    <label for="childId">Chọn bé:</label>
+    <select name="childId" id="childId" class="form-control w-auto d-inline-block">
+        @foreach (var child in children)
+        {
+            <option value="@child.ChildID" selected="@(Model.FirstOrDefault()?.ChildID == child.ChildID)">
+                @child.FirstName @child.LastName
+            </option>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary ml-2">Xem biểu đồ</button>
+</form>
+
+<p>@Model.FirstOrDefault()?.Child.FirstName @Model.FirstOrDefault()?.Child.LastName</p>
+
+<canvas id="growthChart" width="800" height="400"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = @Html.Raw(Json.Serialize(Model.Select(r => r.RecordDate.ToString("dd/MM"))));
+    const weightData = @Html.Raw(Json.Serialize(Model.Select(r => r.Weight)));
+    const heightData = @Html.Raw(Json.Serialize(Model.Select(r => r.Height)));
+
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Cân nặng (kg)',
+                    data: weightData,
+                    borderColor: 'blue',
+                    fill: false
+                },
+                {
+                    label: 'Chiều cao (cm)',
+                    data: heightData,
+                    borderColor: 'green',
+                    fill: false
+                },
+                {
+                    label: 'Vòng đầu (cm)',
+                    data: @Html.Raw(Json.Serialize(Model.Select(r => r.HeadCircumference))),
+                    borderColor: 'red',
+                    fill: false
+                }
+            ]
+        }
+    });
+</script>
+
+<a asp-action="Index" class="btn btn-secondary mt-4">⬅️ Quay lại danh sách</a>
